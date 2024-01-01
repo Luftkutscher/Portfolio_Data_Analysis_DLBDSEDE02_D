@@ -8,31 +8,29 @@ Die Ergebnisse des mitgelieferten Beispieldatensatzes (Diagramme als separate Da
 
 These are the 10 most used #hashtags:
 
-zurich: 31
-oliviarodrigo: 17
-putin: 16
-switzerland: 10
-mev: 10
-fashion: 9
-gc: 8
-sports: 6
-email: 5
-lowcode: 4
+zurich: 31,
+oliviarodrigo: 17,
+putin: 16,
+switzerland: 10,
+mev: 10,
+fashion: 9,
+gc: 8,
+sports: 6,
+email: 5,
+lowcode: 4,
 
 These are the 10 most active users:
 
-username
-ST0P_PUTIN         30
-mehmet2023a        25
-ZurichCH           21
-paxluxfashion      21
-NaokoMogi7575      16
-BrunoLauper        15
-MoaddebSepideh     13
-HinkleHoliday      12
-business           10
+ST0P_PUTIN         30,
+mehmet2023a        25,
+ZurichCH           21,
+paxluxfashion      21,
+NaokoMogi7575      16,
+BrunoLauper        15,
+MoaddebSepideh     13,
+HinkleHoliday      12,
+business           10,
 Tanzeelilyas444     9
-Name: count, dtype: int64
 
 These are the Top 5 discussed topics:
 
