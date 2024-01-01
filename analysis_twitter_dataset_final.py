@@ -22,6 +22,7 @@ import gensim.corpora as corpora
 from gensim.models import TfidfModel
 from gensim.corpora import Dictionary
 from gensim import models
+from gensim.utils import simple_preprocess
 
 # Text color lib
 from termcolor import colored
@@ -90,7 +91,11 @@ def extract_hashtags(text):
     for hashtag in hashtag_list:
         htag.append(hashtag)
         return htag
-    
+
+# Function to remove stopwords
+def remove_stopwords(texts):
+    return [[word for word in simple_preprocess(str(doc)) 
+             if word not in stop_words] for doc in texts]
     
 
 """ MAIN CODE BELOW """
