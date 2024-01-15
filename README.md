@@ -2,16 +2,11 @@
 
 Twitter Topic Modelling using TF-IDF and LSA, based on NLTK and Gensim.
 
-Make sure you have all the libraries installed, and the NLTK stopwords dictionary downloaded. You can uncomment nltk.download() in analysis_twitter_dataset_final.py to achieve this. For further information, see here: https://www.nltk.org/data.html
-
-Please note that the umass.png (which is the result of the topic coherence calculation) is not saved automatically, but was copied from the Jupyter notebook output after the test run. It can be saved easily with the command plt.savefig(), if you wish so.
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 The results of the topic modelling of a test run were as follows (please find the diagrams in the root directory of this repository):
 
+~~~
 
-"These are the 10 most used #hashtags:
+These are the 10 most used #hashtags:
 
 zurich: 31
 oliviarodrigo: 17
@@ -155,6 +150,17 @@ These are the Top 6 discussed topics:
  (4,
   '-0.451*"gift" + -0.438*"claim" + -0.409*"happy" + -0.365*"year" + -0.319*"new"'),
  (5,
-  '0.514*"floor" + 0.511*"standing" + 0.336*"june" + 0.314*"may" + 0.187*"london"')]"
+  '0.514*"floor" + 0.511*"standing" + 0.336*"june" + 0.314*"may" + 0.187*"london"')]
 
 
+~~~
+
+# Quickstart
+
+1) Download the provided Jupyter notebook: analysis_twitter_dataset_final.ipynb
+2) Download the provided X (former Twitter) dataset and copy it to the same folder as you downloaded the Jupyter notebook: tweets_2477.json (you may use retrieve_twitter_dataset_sanitized.ipynb to download your own dataset, just add your secret and change the query)
+3) Install the required libraries (if you are not sure, you can just run the program and see which libs are missing in the error message)
+4) Download the NTLK dataset  either manually or by uncommenting # nltk.download() in analysis_twitter_dataset_final.ipynb -> https://www.nltk.org/data.html
+5) Run the notebook and enjoy the result!
+
+Sidenote: the umass.png (which is the result of the topic coherence calculation) is not saved automatically, but was copied from the Jupyter notebook output after the test run. It can be saved easily with the command plt.savefig(), if you wish to do so.
