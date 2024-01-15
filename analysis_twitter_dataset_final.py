@@ -23,6 +23,7 @@ from gensim.models import TfidfModel
 from gensim.corpora import Dictionary
 from gensim import models
 from gensim.utils import simple_preprocess
+from gensim.models.coherencemodel import CoherenceModel
 
 # Text color lib
 from termcolor import colored
@@ -96,6 +97,12 @@ def extract_hashtags(text):
 def remove_stopwords(texts):
     return [[word for word in simple_preprocess(str(doc)) 
              if word not in stop_words] for doc in texts]
+
+# Function to calculate umass for topic coherence
+def coherence_umass(corpus, dictionary, k):
+    lsi_model = models.LsiModel(corpus=corpus_tfidf, num_topics=k)
+    coherence = CoherenceModel(model=lsi_model, corpus=corpus, dictionary=dictionary, coherence='u_mass')
+    return coherence.get_coherence()
     
 
 """ MAIN CODE BELOW """
@@ -197,12 +204,37 @@ corpus_tfidf = tfidf[corpus]
 
 ########################
 #                      #
+#  Topic Coherence     #
+#                      #
+######################## 
+
+list_umass = []
+list_topics = np.arange(1,101) #create an array with numbers from 1 to 100
+
+print(color.RED +"\nTopic Coherence (# Topics vs. UMass Value):\n" + color.END)
+
+# loop through the previously created array and calculate the umass value
+for k in list_topics:
+    c_umass = coherence_umass(corpus_tfidf, dict, k)
+    list_umass.append(c_umass)
+    print("{}: {}".format(k, c_umass))
+
+# create a pandas dataframe that contains the calculated umass values + no. of topics
+dc = pd.DataFrame(list(zip(list_topics, list_umass)), columns=["Number_of_Topics","UMass_Value"])
+index_max = dc["UMass_Value"].idxmax() 
+topic_number = dc["Number_of_Topics"].iloc[index_max] #locate the maximum umass value and save relating best no. of topics
+
+# Uncomment below line to calculate the 5 most prominent topics, to adhere to the given task.
+# This will overwrite the above calculated topic coherence umass value.
+# topic_number = 5
+
+########################
+#                      #
 #          LSA         #
 #                      #
 ######################## 
 
-lsi_model = models.LsiModel(corpus_tfidf, id2word=dct, num_topics=5)  # initialize an LSI transformation
-
+lsi_model = models.LsiModel(corpus_tfidf, id2word=dct, num_topics=topic_number)  # initialize an LSI transformation
 
 ########################
 #                      #
@@ -210,14 +242,20 @@ lsi_model = models.LsiModel(corpus_tfidf, id2word=dct, num_topics=5)  # initiali
 #                      #
 ######################## 
 
-# Print Top 5 LSA-Topics with the 5 most prominent words for each
-print(color.RED +"\nThese are the Top 5 discussed topics:\n" + color.END)
+# Plot the UMass values vs. amount of topics
+print(color.RED +"\nTopic Coherence Graph:\n" + color.END)
+plt.plot(dc["Number_of_Topics"], dc["UMass_Value"], marker='o') 
+plt.xlabel("Number of Topics")
+plt.ylabel("UMass Value")
+plt.text(dc["Number_of_Topics"].iloc[index_max],dc["UMass_Value"].iloc[index_max], str(dc["Number_of_Topics"].iloc[index_max])+" Topic(s)", color='red') # mark max. umass -> best value
+plt.show() 
 
-display(lsi_model.print_topics(num_topics=5, num_words=5))
-
-print(color.RED +"\nResulting Wordclouds:\n" + color.END)
+# Print Top x LSA-Topics with the 5 most prominent words for each
+print(color.RED +"\nThese are the Top " + str(topic_number) +" discussed topics:\n" + color.END)
+display(lsi_model.print_topics(num_topics=topic_number, num_words=5))
 
 # Create a WordCloud for each topic
+print(color.RED +"\nResulting Wordclouds:\n" + color.END)
 for t in range(lsi_model.num_topics):
     plt.figure()
     plt.imshow(WordCloud().fit_words(dict(lsi_model.show_topic(t, 50))))
