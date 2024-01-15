@@ -113,7 +113,7 @@ df = pd.read_json('tweets_2477.json', orient ='split')
 
 ########################
 #                      #
-# Initial Sanitation   #
+# Initial Sanitization #
 #                      #
 ######################## 
 
